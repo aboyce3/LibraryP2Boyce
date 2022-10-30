@@ -47,12 +47,14 @@ public class BookStore {
         String id = request.params(":id");
         for(int i = 0; i < books.size(); i++){
             Book b = books.get(i);
-            if(b.getId().equals(id)){
+            if(b.getId().equals(id) && b.getStock() > 0){
                 oldPrice = b.getPrice();
                 newPrice = Double.parseDouble(df.format(b.getPrice() * .9));
                 b.setPrice(newPrice);
                 b.setStock(b.getStock() - 1);
                 books.set(i, b);
+                updateBookPrice(b.getId(), newPrice);
+                updateBookStock(b.getId(), b.getStock()-1);
                 return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseSuccess(oldPrice, newPrice));
             }
         }
@@ -127,11 +129,26 @@ public class BookStore {
                 '}';
     }
 
-    private void updateBookPrice(double price){
-
+    private void updateBookPrice(String Id, double price){
+        String lookup = "UPDATE * FROM Books;";
+        Statement statement = null;
+        ResultSet results = null;
+        Connection con = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
+            statement = con.createStatement();
+            results = statement.executeQuery(lookup);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void decrementUserInventory(String username){
+
+    }
+
+    private void updateBookStock(String Id, int stock){
 
     }
 }
