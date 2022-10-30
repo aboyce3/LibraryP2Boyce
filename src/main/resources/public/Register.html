@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Login</title>
 </head>
 <form class="form" id="font-courier-prime" action="/AccountCreation" method="post">
     <p>
-        <label for="username">Username: <span id="red">*</span></label>
-        <input type="text" name="username" id="username" required></input><br>
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username" required><br>
     </p>
     <p>
-        <label for="password">Password: <span id="red">*</span></label>
-        <input type="password" name="password" id="password" onchange="check()" requried></input><br>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password"  requried><br>
     </p>
     <p>
-        <label for="password">Confirm Password: <span id="red">*</span></label>
-        <input type="password" name="confirm_password" id="confirm_password" onchange="check()" requried></input><br>
+        <label for="password">Confirm Password: </label>
+        <input type="password" name="confirm_password" id="confirm_password"  requried><br>
         <span id = "message"></span>
     </p>
     <p>
-        <input id="register" id="login-button-positive" type="submit" value="Register!" disabled></input>
+        <input id="register" id="login-button-positive" type="submit" value="Register!">
     </p>
 </form>
-<script src = "drop.js"></script>
 </html>
