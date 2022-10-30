@@ -39,12 +39,12 @@ public class LoginUser {
             statement = con.createStatement();
             results = statement.executeQuery(lookup);
             while (results.next()) {
-                String uName = results.getString("username");
+                String uName = results.getString("userName");
                 String pass = results.getString("password");
                 if (userName.contentEquals(uName) && password.contentEquals(pass)) {
-                    request.session().attribute("username", userName);
+                    request.session().attribute("userName", userName);
                     request.session().maxInactiveInterval(99999);;
-                    response.redirect("/Hub");
+                    response.redirect("/Home");
                     return "";
                 }
             }

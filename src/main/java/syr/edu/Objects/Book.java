@@ -47,6 +47,9 @@ public class Book {
     }
 
     public void setStock(int stock) {
+        if(stock < 0){
+            return;
+        }
         this.stock = stock;
     }
 

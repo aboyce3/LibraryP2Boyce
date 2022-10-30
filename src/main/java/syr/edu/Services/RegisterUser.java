@@ -9,6 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.sql.*;
 
 import com.google.common.io.Files;
+
+import static spark.Spark.halt;
+
 public class RegisterUser {
 
     public String register(Request request, Response response) throws IOException {
@@ -24,9 +27,9 @@ public class RegisterUser {
             response.redirect("/Home");
             return "";
         }
-        String userName = request.queryParams("userName");
+        String userName = request.queryParams("username");
         String password = request.queryParams("password");
-        String password2 = request.queryParams("password2");
+        String password2 = request.queryParams("confirm_password");
         Connection con;
         String insert = "INSERT into users " + "(username, password)" + "VALUES " + "('" + userName + "','"
                 + password + "')";
@@ -39,7 +42,7 @@ public class RegisterUser {
             statement = con.createStatement();
             result = statement.executeQuery(lookup);
             while (result.next()) {
-                String uName = result.getString("username");
+                String uName = result.getString("userName");
                 if (userName.contentEquals(uName))
                     response.redirect("/CreateAnAccount");
                 return "";
@@ -58,7 +61,7 @@ public class RegisterUser {
             try {
                 if (statement != null) {
                     statement.executeUpdate(insert);
-                    request.session().attribute("username", userName);
+                    request.session().attribute("userName", userName);
                     request.session().maxInactiveInterval(9999);
                     response.redirect("/Home");
                     return "";

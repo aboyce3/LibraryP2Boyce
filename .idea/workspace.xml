@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9b4d02e-f973-4b58-9621-d0d9db632cbf" name="Changes" comment="LibraryP2 v1">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/public/Register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/public/Register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Services/LoginUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Services/LoginUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Services/RegisterUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Services/RegisterUser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667111241513</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="LibraryP2 v1">
+      <created>1667111675807</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1667111675807</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

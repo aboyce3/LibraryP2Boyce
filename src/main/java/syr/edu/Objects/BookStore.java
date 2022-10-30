@@ -16,7 +16,7 @@ import java.util.List;
 
 public class BookStore {
 
-    private final List<Book> books;
+    private List<Book> books;
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -51,6 +51,7 @@ public class BookStore {
                 oldPrice = b.getPrice();
                 newPrice = Double.parseDouble(df.format(b.getPrice() * .9));
                 b.setPrice(newPrice);
+                b.setStock(b.getStock() - 1);
                 books.set(i, b);
                 return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseSuccess(oldPrice, newPrice));
             }
@@ -96,6 +97,7 @@ public class BookStore {
                 int stock = results.getInt("Stock");
                 temp.add(new Book(ISBN, authors, title, edition, price, stock));
             }
+            this.books = temp;
         } catch (Exception e) {
             e.printStackTrace();
         }
