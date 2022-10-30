@@ -28,14 +28,14 @@ public class LoginUser {
         }
         String userName = request.queryParams("userName");
         String password = request.queryParams("password");
-        String lookup = "SELECT * FROM messageboard.users WHERE username = '" + userName + "' AND password = '"
+        String lookup = "SELECT * FROM BookStore.users WHERE username = '" + userName + "' AND password = '"
                 + password + "';";
         Connection con = null;
         Statement statement = null;
         ResultSet results = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/messageboard", "root", "password");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
             statement = con.createStatement();
             results = statement.executeQuery(lookup);
             while (results.next()) {

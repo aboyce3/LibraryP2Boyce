@@ -6,6 +6,10 @@ import spark.Response;
 import syr.edu.Purchase.PurchaseFailure;
 import syr.edu.Purchase.PurchaseSuccess;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +18,15 @@ public class BookStore {
 
     private final List<Book> books;
 
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+
     public BookStore(ArrayList<Book> books){
         this.books = books;
     }
 
     public BookStore(){
         this.books = new ArrayList<>();
+        initLibrary();
     }
 
     public void addBook(Book book){
@@ -28,15 +35,6 @@ public class BookStore {
 
     public List<Book> getBooks(){
         return this.books;
-    }
-
-    private static final DecimalFormat df = new DecimalFormat("0.00");
-
-    @Override
-    public String toString() {
-        return "Library{" +
-                "books=" + books +
-                '}';
     }
 
     public String inventory(Request request, Response response) {
@@ -78,6 +76,35 @@ public class BookStore {
     }
 
     private void initLibrary(){
+        List<Book> temp = new ArrayList<>();
+        Connection con = null;
+        String lookup = "SELECT * FROM Books;";
+        Statement statement = null;
+        ResultSet results = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
+            statement = con.createStatement();
+            results = statement.executeQuery(lookup);
+            while (results.next()) {
+                //String isbn, List<String> Authors, String title, String edition, double price, int stock
+                String ISBN = results.getString("ISBN");
+                List<String> authors = List.of(results.getString("Authors").split(","));
+                String title = results.getString("Title");
+                String edition = results.getString("Edition");
+                double price = results.getDouble("Price");
+                int stock = results.getInt("Stock");
+                temp.add(new Book(ISBN, authors, title, edition, price, stock));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public String toString() {
+        return "Library{" +
+                "books=" + books +
+                '}';
     }
 }

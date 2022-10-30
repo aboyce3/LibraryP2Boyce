@@ -30,12 +30,12 @@ public class RegisterUser {
         Connection con;
         String insert = "INSERT into users " + "(username, password)" + "VALUES " + "('" + userName + "','"
                 + password + "')";
-        String lookup = "SELECT * FROM messageboard.users WHERE username = '" + userName + "'";
+        String lookup = "SELECT * FROM BookStore.users WHERE username = '" + userName + "'";
         Statement statement = null;
         ResultSet result = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/messageboard", "root", "password");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
             statement = con.createStatement();
             result = statement.executeQuery(lookup);
             while (result.next()) {
