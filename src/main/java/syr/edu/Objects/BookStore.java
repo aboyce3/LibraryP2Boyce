@@ -39,23 +39,17 @@ public class BookStore {
     }
 
     public String inventory(Request request, Response response) {
-        if(request.session().attribute("uName") == null){
+        if(checkLogin(request, response)) {
             response.redirect("/Login");
             return "";
-        }else if(currentUser == null || currentUser.getUserName().equals("")
-                && request.session().attribute("uName") == null){
-            currentUser = new User(request.session().attribute("uName"));
         }
         return new GsonBuilder().setPrettyPrinting().create().toJson(books);
     }
 
     public String buy(Request request, Response response) {
-        if(request.session().attribute("uName") == null){
+        if(checkLogin(request, response)) {
             response.redirect("/Login");
             return "";
-        }else if(currentUser == null || currentUser.getUserName().equals("")
-                && request.session().attribute("uName") == null){
-            currentUser = new User(request.session().attribute("uName"));
         }
         double newPrice = 0.0;
         double oldPrice = 0.0;
@@ -69,7 +63,7 @@ public class BookStore {
                 b.setStock(b.getStock() - 1);
                 books.set(i, b);
                 updateBookPriceAndInventory(b.getId(), newPrice, b.getStock()-1);
-                updateBookStock(b.getId(), b.getStock()-1);
+                updateUserInventory(currentUser.getUserName(), b, b.getStock()-1);
                 currentUser.addOwned(books.get(i));
                 return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseSuccess(oldPrice, newPrice));
             }
@@ -78,12 +72,9 @@ public class BookStore {
     }
 
     public String sellID(Request request, Response response) {
-        if(request.session().attribute("uName") == null){
+        if(checkLogin(request, response)) {
             response.redirect("/Login");
             return "";
-        }else if(currentUser == null || currentUser.getUserName().equals("")
-                && request.session().attribute("uName") == null){
-            currentUser = new User(request.session().attribute("uName"));
         }
         double newPrice = 0.0;
         double oldPrice = 0.0;
@@ -102,12 +93,9 @@ public class BookStore {
     }
 
     public String sellISBN(Request request, Response response) {
-        if(request.session().attribute("uName") == null){
+        if(checkLogin(request, response)) {
             response.redirect("/Login");
             return "";
-        }else if(currentUser == null || currentUser.getUserName().equals("")
-                && request.session().attribute("uName") == null){
-            currentUser = new User(request.session().attribute("uName"));
         }
         double newPrice = 0.0;
         double oldPrice = 0.0;
@@ -161,6 +149,29 @@ public class BookStore {
 
     private void updateBookPriceAndInventory(String Id, double price, int stock){
         String update = "UPDATE Books Price=" + price +", Stock=" + stock + " WHERE ID='" + Id + "'";
+        execQuery(update);
+    }
+
+    private void updateUserInventory(String username, Book b,  int inventory){
+        if(currentUser.hasBook(b.getId())){
+            String update = "UPDATE userOwned userAmount=" + inventory + " WHERE ID='" + b.getId() +
+                    "', userName='" + currentUser.getUserName() +"'";
+            execQuery(update);
+        }else{
+            String insert = "INSERT into Books " + "(ID, ISBN, Authors, Title, Edition, Stock, Price)"
+                    + "VALUES "+ "('" + b.getId() + "','"
+                    + b.getIsbn() + "','"
+                    + b.authorsToDB() + "','"
+                    + b.getTitle() + "','"
+                    + b.getEdition() + "','"
+                    + b.getStock() + "','"
+                    + b.getPrice() +"')";
+            execQuery(insert);
+        }
+        currentUser.initUser();
+    }
+
+    public void execQuery(String query){
         Statement statement = null;
         ResultSet results = null;
         Connection con;
@@ -168,42 +179,20 @@ public class BookStore {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
             statement = con.createStatement();
-            statement.executeQuery(update);
+            statement.executeQuery(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void updateUserInventory(String username, String Id,  int inventory){
-        if (inventory < 0) return;
-        String update = "UPDATE userOwned userAmount=" + inventory + " WHERE ID='" + Id + "', userName='" + username +"'";
-        Statement statement = null;
-        ResultSet results = null;
-        Connection con = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
-            statement = con.createStatement();
-            statement.executeQuery(update);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public boolean checkLogin(Request request, Response response){
+        if(request.session().attribute("uName") == null){
+            return false;
+        }else if(currentUser == null || currentUser.getUserName().equals("")
+                && request.session().attribute("uName") == null){
+            currentUser = new User(request.session().attribute("uName"));
+            return true;
         }
-    }
-
-    private void updateBookStock(String Id, int stock){
-        if (stock < 0) return;
-        String update = "UPDATE Books Stock=" + stock + " WHERE ID='" + Id +"'";
-        Statement statement = null;
-        ResultSet results = null;
-        Connection con = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
-            statement = con.createStatement();
-            statement.executeQuery(update);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        return true;
     }
 }

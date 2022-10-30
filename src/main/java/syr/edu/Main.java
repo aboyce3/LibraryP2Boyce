@@ -2,13 +2,11 @@ package syr.edu;
 
 import com.google.common.io.Files;
 import syr.edu.Objects.BookStore;
-import syr.edu.Objects.User;
 import syr.edu.Services.LoginUser;
 import syr.edu.Services.RegisterUser;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static spark.Spark.*;
 
@@ -23,7 +21,6 @@ public class Main {
         get("/ValidateLogin", "application/html", login::validateLogin);
         get("/CreateAnAccount", "application/html", register::register);
         get("/Inventory", "application/json", bookStore::inventory);
-        get("/Buy/:id", "application/json", bookStore::buy);
         get("/Logout", "application/html", (request, response) -> {
             request.session().invalidate();
             response.redirect("/Login");
@@ -41,5 +38,6 @@ public class Main {
         post("/Sell/:isbn", "application/json", bookStore::sellID);
 
         put("/Sell/:id", "application/json", bookStore::sellID);
+        put("/Buy/:id", "application/json", bookStore::buy);
     }
 }

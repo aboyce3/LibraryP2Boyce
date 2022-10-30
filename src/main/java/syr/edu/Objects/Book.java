@@ -42,6 +42,16 @@ public class Book {
         this.stock = 1;
     }
 
+    public Book(String id, String isbn, List<String> authors, String title, String edition, double price, int stock) {
+        this.id = id;
+        this.isbn = isbn;
+        this.authors = authors;
+        this.title = title;
+        this.edition = edition;
+        this.price = price;
+        this.stock = stock;
+    }
+
     public int getStock() {
         return stock;
     }
@@ -128,15 +138,4 @@ public class Book {
         return Objects.hash(getIsbn(), getAuthors(), getTitle(), getEdition(), getPrice());
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id='" + id + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
-                ", title='" + title + '\'' +
-                ", edition='" + edition + '\'' +
-                ", price=" + price +
-                '}';
-    }
 }
