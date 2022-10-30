@@ -3,6 +3,7 @@ package syr.edu.Services;
 import com.google.common.io.Files;
 import spark.Request;
 import spark.Response;
+import syr.edu.Objects.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.*;
 
 public class LoginUser {
+
     public String login(Request request, Response response) throws IOException {
         if(request.session().attribute("uName") != null){
             response.redirect("/Home");
@@ -43,7 +45,7 @@ public class LoginUser {
                 String pass = results.getString("password");
                 if (userName.contentEquals(uName) && password.contentEquals(pass)) {
                     request.session().attribute("userName", userName);
-                    request.session().maxInactiveInterval(99999);;
+                    request.session().maxInactiveInterval(99999);
                     response.redirect("/Home");
                     return "";
                 }

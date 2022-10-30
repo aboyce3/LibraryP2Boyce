@@ -6,22 +6,18 @@ import java.util.ArrayList;
 
 public class User {
     private String userName;
-    private String email;
     private ArrayList<Book> owned, selling;
 
-    public User(String user, String email){
-        this.email = email;
+    public User(String user){
         userName = user;
         owned = new ArrayList<>();
         selling = new ArrayList<>();
     }
 
-    public String getEmail(){return email;}
     public String getUserName(){return userName;}
     public ArrayList<Book> getOwned(){return owned;}
     public ArrayList<Book> getSelling(){return selling;}
 
-    public void setEmail(String email){this.email = email;}
     public void setUserName(String userName){this.userName = userName;}
     public void addOwned(Book b){owned.add(b);}
     public void addSelling(Book b){selling.add(b);}

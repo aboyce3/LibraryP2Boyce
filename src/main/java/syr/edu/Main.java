@@ -22,7 +22,6 @@ public class Main {
         get("/CreateAnAccount", "application/html", register::register);
         get("/Inventory", "application/json", bookStore::inventory);
         get("/Buy/:id", "application/json", bookStore::buy);
-
         get("/Logout", "application/html", (request, response) -> {
             request.session().invalidate();
             response.redirect("/Login");
@@ -37,6 +36,8 @@ public class Main {
         });
 
         post("/AccountCreation", "application/html", register::AccountCreation);
-        post("/Sell/:id", "application/json", bookStore::sell);
+        post("/Sell/:isbn", "application/json", bookStore::sellID);
+
+        put("/Sell/:id", "application/json", bookStore::sellID);
     }
 }

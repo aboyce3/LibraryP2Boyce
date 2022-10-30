@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d9b4d02e-f973-4b58-9621-d0d9db632cbf" name="Changes" comment="LibraryP2 v1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Services/LoginUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Services/LoginUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Services/RegisterUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Services/RegisterUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/public/Home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/public/Home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +160,28 @@
       <option name="project" value="LOCAL" />
       <updated>1667111675807</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="LibraryP2 v1">
+      <created>1667113071090</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1667113071093</updated>
+    </task>
+    <task id="LOCAL-00009" summary="LibraryP2 v1">
+      <created>1667113159513</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1667113159513</updated>
+    </task>
+    <task id="LOCAL-00010" summary="LibraryP2 v1">
+      <created>1667113237724</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1667113237724</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

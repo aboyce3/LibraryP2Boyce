@@ -34,8 +34,9 @@ public class Driver {
 
         Connection con;
         for(Book b : books){
-            String insert = "INSERT into Books " + "(ISBN, Authors, Title, Edition, Stock, Price)"
-                    + "VALUES "+ "('" + b.getIsbn() + "','"
+            String insert = "INSERT into Books " + "(ID, ISBN, Authors, Title, Edition, Stock, Price)"
+                    + "VALUES "+ "('" + b.getId() + "','"
+                           + b.getIsbn() + "','"
                            + b.authorsToDB() + "','"
                            + b.getTitle() + "','"
                            + b.getEdition() + "','"

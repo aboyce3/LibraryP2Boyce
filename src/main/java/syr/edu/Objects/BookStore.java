@@ -59,13 +59,30 @@ public class BookStore {
         return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseFailure());
     }
 
-    public String sell(Request request, Response response) {
+    public String sellID(Request request, Response response) {
         double newPrice = 0.0;
         double oldPrice = 0.0;
         String id = request.params(":id");
         for(int i = 0; i < books.size(); i++){
             Book b = books.get(i);
             if(b.getId().equals(id)){
+                oldPrice = b.getPrice();
+                newPrice = Double.parseDouble(df.format(b.getPrice() * .9));
+                b.setPrice(newPrice);
+                books.set(i, b);
+                return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseSuccess(oldPrice, newPrice));
+            }
+        }
+        return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseFailure());
+    }
+
+    public String sellISBN(Request request, Response response) {
+        double newPrice = 0.0;
+        double oldPrice = 0.0;
+        String isbn = request.params(":isbn");
+        for(int i = 0; i < books.size(); i++){
+            Book b = books.get(i);
+            if(b.getIsbn().equals(isbn)){
                 oldPrice = b.getPrice();
                 newPrice = Double.parseDouble(df.format(b.getPrice() * .9));
                 b.setPrice(newPrice);
@@ -108,5 +125,13 @@ public class BookStore {
         return "Library{" +
                 "books=" + books +
                 '}';
+    }
+
+    private void updateBookPrice(double price){
+
+    }
+
+    private void decrementUserInventory(String username){
+
     }
 }
