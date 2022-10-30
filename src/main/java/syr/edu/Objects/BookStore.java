@@ -18,6 +18,7 @@ public class BookStore {
 
     private List<Book> books;
 
+    private User currentUser = null;
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public BookStore(ArrayList<Book> books){
@@ -26,7 +27,7 @@ public class BookStore {
 
     public BookStore(){
         this.books = new ArrayList<>();
-        initLibrary();
+        initStore();
     }
 
     public void addBook(Book book){
@@ -38,10 +39,24 @@ public class BookStore {
     }
 
     public String inventory(Request request, Response response) {
+        if(request.session().attribute("uName") == null){
+            response.redirect("/Login");
+            return "";
+        }else if(currentUser == null || currentUser.getUserName().equals("")
+                && request.session().attribute("uName") == null){
+            currentUser = new User(request.session().attribute("uName"));
+        }
         return new GsonBuilder().setPrettyPrinting().create().toJson(books);
     }
 
     public String buy(Request request, Response response) {
+        if(request.session().attribute("uName") == null){
+            response.redirect("/Login");
+            return "";
+        }else if(currentUser == null || currentUser.getUserName().equals("")
+                && request.session().attribute("uName") == null){
+            currentUser = new User(request.session().attribute("uName"));
+        }
         double newPrice = 0.0;
         double oldPrice = 0.0;
         String id = request.params(":id");
@@ -53,8 +68,9 @@ public class BookStore {
                 b.setPrice(newPrice);
                 b.setStock(b.getStock() - 1);
                 books.set(i, b);
-                updateBookPrice(b.getId(), newPrice);
+                updateBookPriceAndInventory(b.getId(), newPrice, b.getStock()-1);
                 updateBookStock(b.getId(), b.getStock()-1);
+                currentUser.addOwned(books.get(i));
                 return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseSuccess(oldPrice, newPrice));
             }
         }
@@ -62,6 +78,13 @@ public class BookStore {
     }
 
     public String sellID(Request request, Response response) {
+        if(request.session().attribute("uName") == null){
+            response.redirect("/Login");
+            return "";
+        }else if(currentUser == null || currentUser.getUserName().equals("")
+                && request.session().attribute("uName") == null){
+            currentUser = new User(request.session().attribute("uName"));
+        }
         double newPrice = 0.0;
         double oldPrice = 0.0;
         String id = request.params(":id");
@@ -79,6 +102,13 @@ public class BookStore {
     }
 
     public String sellISBN(Request request, Response response) {
+        if(request.session().attribute("uName") == null){
+            response.redirect("/Login");
+            return "";
+        }else if(currentUser == null || currentUser.getUserName().equals("")
+                && request.session().attribute("uName") == null){
+            currentUser = new User(request.session().attribute("uName"));
+        }
         double newPrice = 0.0;
         double oldPrice = 0.0;
         String isbn = request.params(":isbn");
@@ -95,7 +125,7 @@ public class BookStore {
         return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseFailure());
     }
 
-    private void initLibrary(){
+    private void initStore(){
         List<Book> temp = new ArrayList<>();
         Connection con = null;
         String lookup = "SELECT * FROM Books;";
@@ -129,8 +159,24 @@ public class BookStore {
                 '}';
     }
 
-    private void updateBookPrice(String Id, double price){
-        String lookup = "UPDATE * FROM Books;";
+    private void updateBookPriceAndInventory(String Id, double price, int stock){
+        String update = "UPDATE Books Price=" + price +", Stock=" + stock + " WHERE ID='" + Id + "'";
+        Statement statement = null;
+        ResultSet results = null;
+        Connection con;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
+            statement = con.createStatement();
+            statement.executeQuery(update);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateUserInventory(String username, String Id,  int inventory){
+        if (inventory < 0) return;
+        String update = "UPDATE userOwned userAmount=" + inventory + " WHERE ID='" + Id + "', userName='" + username +"'";
         Statement statement = null;
         ResultSet results = null;
         Connection con = null;
@@ -138,17 +184,26 @@ public class BookStore {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
             statement = con.createStatement();
-            results = statement.executeQuery(lookup);
+            statement.executeQuery(update);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void decrementUserInventory(String username){
-
-    }
-
     private void updateBookStock(String Id, int stock){
+        if (stock < 0) return;
+        String update = "UPDATE Books Stock=" + stock + " WHERE ID='" + Id +"'";
+        Statement statement = null;
+        ResultSet results = null;
+        Connection con = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
+            statement = con.createStatement();
+            statement.executeQuery(update);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

@@ -2,11 +2,13 @@ package syr.edu;
 
 import com.google.common.io.Files;
 import syr.edu.Objects.BookStore;
+import syr.edu.Objects.User;
 import syr.edu.Services.LoginUser;
 import syr.edu.Services.RegisterUser;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static spark.Spark.*;
 
@@ -28,7 +30,7 @@ public class Main {
             return "";
         });
         get("/Home", "application/html,", (request, response) -> {
-            if(request.session().attribute("uName") != null) response.redirect("/Login");
+            if(request.session().attribute("uName") == null) response.redirect("/Login");
             response.type("text/html");
             String path = "/Users/andrewboyce/eclipse-workspace/LibraryP2Boyce/src/main/resources/Public/Home.html";
             String content = Files.asCharSource(new File(path), StandardCharsets.UTF_8).read();

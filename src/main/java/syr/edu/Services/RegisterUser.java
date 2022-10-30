@@ -10,8 +10,6 @@ import java.sql.*;
 
 import com.google.common.io.Files;
 
-import static spark.Spark.halt;
-
 public class RegisterUser {
 
     public String register(Request request, Response response) throws IOException {
