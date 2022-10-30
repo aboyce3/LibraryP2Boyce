@@ -1,4 +1,4 @@
-package syr.edu;
+package syr.edu.Objects;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +10,17 @@ public class Book {
     private String title;
     private String edition;
     private double price;
+    private int stock;
+
+    public Book(String isbn, List<String> authors, String title, String edition, double price, int stock){
+        this.isbn = isbn;
+        this.authors = authors;
+        this.title = title;
+        this.edition = edition;
+        this.price = Math.round(price*100.0)/100.0;
+        this.stock = stock;
+        this.id = String.valueOf(this.hashCode());
+    }
 
     public Book(String id, String isbn, List<String> authors, String title, String edition, double price){
         this.id = id;
@@ -18,6 +29,15 @@ public class Book {
         this.title = title;
         this.edition = edition;
         this.price = Math.round(price*100.0)/100.0;
+        this.stock = 1;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public String getId() {
@@ -81,7 +101,7 @@ public class Book {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getIsbn(), getAuthors(), getTitle(), getEdition(), getPrice());
+        return Objects.hash(getIsbn(), getAuthors(), getTitle(), getEdition(), getPrice());
     }
 
     @Override

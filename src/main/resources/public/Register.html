@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<form class="form" id="font-courier-prime" action="/AccountCreation" method="get">
+    <p>
+        <label for="username">Username: <span id="red">*</span></label>
+        <input type="text" name="username" id="username" required></input><br>
+    </p>
+    <p>
+        <label for="password">Password: <span id="red">*</span></label>
+        <input type="password" name="password" id="password" onchange="check()" requried></input><br>
+    </p>
+    <p>
+        <label for="password">Confirm Password: <span id="red">*</span></label>
+        <input type="password" name="confirm_password" id="confirm_password" onchange="check()" requried></input><br>
+        <span id = "message"></span>
+    </p>
+    <p>
+        <input id="register" id="login-button-positive" type="submit" value="Register!" disabled></input>
+    </p>
+</form>
+<script src = "drop.js"></script>
+</html>

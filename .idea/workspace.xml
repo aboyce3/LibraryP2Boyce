@@ -5,10 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9b4d02e-f973-4b58-9621-d0d9db632cbf" name="Changes" comment="LibraryP2 v0.0.2">
-      <change afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Transaction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Purchase/PurchaseFailure.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Purchase/PurchaseResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Purchase/PurchaseSuccess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Services/LoginUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Services/RegisterUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/public/Home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/public/Login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/public/Register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Library.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Library.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Library.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Transaction.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +31,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -28,6 +41,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2GMuxYxDwShvwpM4ecECxHB66tU" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -36,11 +52,17 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/Public" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.syr.edu.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
@@ -60,7 +82,7 @@
       <module name="LibraryP2Boyce" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="syr.edu.*" />
+          <option name="PATTERN" value="syr.edu.Purchase.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -98,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666240061399</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="LibraryP2 v0.0.2">
+      <created>1666642809094</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1666642809094</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
