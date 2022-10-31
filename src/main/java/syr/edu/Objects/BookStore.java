@@ -58,15 +58,15 @@ public class BookStore {
         for(int i = 0; i < books.size(); i++){
             Book b = books.get(i);
             String bid = books.get(i).getId();
-            if(bid.equals(id)){
+            if(bid.equals(id) && b.getStock() > 0){
                 oldPrice = b.getPrice();
                 newPrice = Double.parseDouble(df.format(b.getPrice() * .9));
                 b.setPrice(newPrice);
                 b.setStock(b.getStock() - 1);
                 books.set(i, b);
-                updateBookPriceAndInventory(b.getId(), newPrice, b.getStock()-1);
-                updateUserInventory(currentUser.getUserName(), b, b.getStock()-1);
+                updateBookPriceAndInventory(b.getIsbn(), newPrice, b.getStock());
                 currentUser.addOwned(books.get(i));
+                currentUser = new User(currentUser.getUserName());
                 return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseSuccess(oldPrice, newPrice));
             }
         }
@@ -82,8 +82,9 @@ public class BookStore {
         for(int i = 0; i < currentUser.getOwned().size(); i++){
             if(currentUser.getOwned().get(i).getId().equals(id)){
                 currentUser.removeOwned(currentUser.getOwned().get(i));
-                updateBookPriceAndInventory(currentUser.getOwned().get(i).getId(),
+                updateBookPriceAndInventory(currentUser.getOwned().get(i).getIsbn(),
                         currentUser.getOwned().get(i).getPrice(),currentUser.getOwned().get(i).getStock() -1);
+                currentUser = new User(currentUser.getUserName());
                 return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Success"));
             }
         }
@@ -98,8 +99,9 @@ public class BookStore {
         String isbn = request.params(":isbn");
         for(int i = 0; i < books.size(); i++){
             if(books.get(i).getIsbn().equals(isbn)){
-                updateBookPriceAndInventory(currentUser.getOwned().get(i).getId(),
-                        currentUser.getOwned().get(i).getPrice(),currentUser.getOwned().get(i).getStock() + 1);
+                updateBookPriceAndInventory(books.get(i).getIsbn(),
+                        books.get(i).getPrice(),books.get(i).getStock() + 1);
+                currentUser = new User(currentUser.getUserName());
                 return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Success"));
             }
         }
@@ -140,29 +142,11 @@ public class BookStore {
                 '}';
     }
 
-    private void updateBookPriceAndInventory(String Id, double price, int stock){
-        String update = "UPDATE Books SET Price=" + price +", Stock=" + stock + " WHERE ID='" + Id + "'";
+    private void updateBookPriceAndInventory(String ISBN, double price, int stock){
+        String update = "UPDATE Books SET Price=" + price +", Stock=" + stock + " WHERE ISBN='" + ISBN + "'";
         execQuery(update);
     }
 
-    private void updateUserInventory(String username, Book b,  int inventory){
-        if(currentUser.hasBook(b.getId())){
-            String update = "UPDATE userOwned userAmount=" + inventory + " WHERE ID='" + b.getId() +
-                    "', userName='" + currentUser.getUserName() +"'";
-            execQuery(update);
-        }else{
-            String insert = "INSERT into Books " + "(ID, ISBN, Authors, Title, Edition, Stock, Price)"
-                    + "VALUES "+ "('" + b.getId() + "','"
-                    + b.getIsbn() + "','"
-                    + b.authorsToDB() + "','"
-                    + b.getTitle() + "','"
-                    + b.getEdition() + "','"
-                    + b.getStock() + "','"
-                    + b.getPrice() +"')";
-            execQuery(insert);
-        }
-        currentUser.initUser();
-    }
 
     public void execQuery(String query){
         Statement statement = null;
@@ -179,6 +163,10 @@ public class BookStore {
     }
 
     public boolean checkLogin(Request request, Response response){
+        if(request.cookies().containsKey("uName")){
+            currentUser = new User(request.cookies().get("uName"));
+            return false;
+        }
         if(request.session().attribute("uName") == null){
             return true;
         }else{

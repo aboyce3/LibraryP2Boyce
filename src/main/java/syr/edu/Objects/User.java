@@ -25,19 +25,16 @@ public class User {
 
     public void addOwned(Book b){
         Book temp = b;
-        Statement statement = null;
-        ResultSet results = null;
-        Connection con;
         for(int i = 0; i < owned.size(); i++){
             if(owned.get(i).getId().equals(b.getId())){
                 owned.get(i).setStock(owned.get(i).getStock() + 1);
-                String update = "UPDATE BookStore.userOwned Stock=" + owned.get(i).getStock() + " WHERE ID='" + userName
-                        + " WHERE ID='" + userName + "' AND bookID=" + b.getId() + ";";
+                String update = "UPDATE BookStore.userOwned SET userAmount=" + owned.get(i).getStock()
+                        + " WHERE userName='" + userName + "' AND bookID=" + b.getId() + ";";
                 execQuery(update);
                 return;
             }
         }
-        String update = "INSERT INTO BookStore.userOwned (bookID, userName, userAmount) VALUES (" + b.getId() + ", " + userName + ", " + 1 + ")";
+        String update = "INSERT INTO BookStore.userOwned (bookID, userName, userAmount) VALUES (" + b.getId() + ", '" + userName + "', " + 1 + ")";
         execQuery(update);
         temp.setStock(1);
         owned.add(temp);
@@ -71,6 +68,7 @@ public class User {
                 "WHERE userName='" + this.getUserName() +"';";
         Statement statement = null;
         ResultSet results = null;
+        //SELECT Books.*, userAmount FROM BookStore.Books JOIN BookStore.userOwned ON ID=bookID WHERE userName='aboyce2';
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
@@ -78,7 +76,7 @@ public class User {
             results = statement.executeQuery(getOwned);
             while (results.next()) {
                 //String isbn, List<String> Authors, String title, String edition, double price, int stock
-                String id = results.getString("bookID");
+                String id = results.getString("ID");
                 String ISBN = results.getString("ISBN");
                 List<String> authors = List.of(results.getString("Authors").split(","));
                 String title = results.getString("Title");

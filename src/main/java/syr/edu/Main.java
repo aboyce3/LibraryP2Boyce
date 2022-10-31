@@ -30,9 +30,9 @@ public class Main {
         });
 
         post("/AccountCreation", "application/html", register::AccountCreation);
-        post("/Sell/:isbn", "application/json", bookStore::sellID);
+        post("/Sell/:id", "application/json", bookStore::sellID);
 
-        put("/Sell/:id", "application/json", bookStore::sellISBN);
+        put("/Sell/:isbn", "application/json", bookStore::sellISBN);
         post("/Buy/:id", "application/json", bookStore::buy);
     }
 }

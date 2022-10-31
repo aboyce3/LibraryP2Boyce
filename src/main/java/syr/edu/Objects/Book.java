@@ -1,6 +1,5 @@
 package syr.edu.Objects;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,8 +20,9 @@ public class Book {
         this.price = Math.round(price*100.0)/100.0;
         this.stock = stock;
         this.id = String.valueOf(this.hashCode());
+        System.out.println(id);
     }
-    public Book(String isbn, String authors, String title, String edition, double price, int stock){
+    public Book(String isbn, String authors, String title, String edition, String s, double price, int stock){
         this.isbn = isbn;
         this.title = title;
         this.edition = edition;
@@ -30,16 +30,6 @@ public class Book {
         this.price = Math.round(price*100.0)/100.0;
         this.stock = stock;
         this.id = String.valueOf(this.hashCode());
-    }
-
-    public Book(String id, String isbn, List<String> authors, String title, String edition, double price){
-        this.id = id;
-        this.isbn = isbn;
-        this.authors = authors;
-        this.title = title;
-        this.edition = edition;
-        this.price = Math.round(price*100.0)/100.0;
-        this.stock = 1;
     }
 
     public Book(String id, String isbn, List<String> authors, String title, String edition, double price, int stock) {
@@ -51,6 +41,7 @@ public class Book {
         this.price = price;
         this.stock = stock;
     }
+
 
     public int getStock() {
         return stock;
