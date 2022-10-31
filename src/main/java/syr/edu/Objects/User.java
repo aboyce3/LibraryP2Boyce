@@ -37,7 +37,7 @@ public class User {
                 return;
             }
         }
-        String update = "INSERT INTO BookStore.userOwned (bookID, userName, userStock) VALUES (" + b.getId() + ", " + userName + ", " + 1 + ")";
+        String update = "INSERT INTO BookStore.userOwned (bookID, userName, userAmount) VALUES (" + b.getId() + ", " + userName + ", " + 1 + ")";
         execQuery(update);
         temp.setStock(1);
         owned.add(temp);
@@ -101,7 +101,7 @@ public class User {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
             statement = con.createStatement();
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         }

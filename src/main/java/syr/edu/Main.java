@@ -38,6 +38,6 @@ public class Main {
         post("/Sell/:isbn", "application/json", bookStore::sellID);
 
         put("/Sell/:id", "application/json", bookStore::sellID);
-        put("/Buy/:id", "application/json", bookStore::buy);
+        post("/Buy/:id", "application/json", bookStore::buy);
     }
 }

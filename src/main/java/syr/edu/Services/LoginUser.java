@@ -45,6 +45,7 @@ public class LoginUser {
                 String pass = results.getString("password");
                 if (userName.contentEquals(uName) && password.contentEquals(pass)) {
                     request.session().attribute("uName", userName);
+                    response.cookie("uName", userName);
                     request.session().maxInactiveInterval(99999);
                     response.redirect("/Home");
                     return "";

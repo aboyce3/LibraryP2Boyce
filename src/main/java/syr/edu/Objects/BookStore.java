@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BookStore {
 
@@ -56,7 +57,8 @@ public class BookStore {
         String id = request.params(":id");
         for(int i = 0; i < books.size(); i++){
             Book b = books.get(i);
-            if(b.getId().equals(id) && b.getStock() > 0){
+            String bid = books.get(i).getId();
+            if(bid.equals(id)){
                 oldPrice = b.getPrice();
                 newPrice = Double.parseDouble(df.format(b.getPrice() * .9));
                 b.setPrice(newPrice);
@@ -148,7 +150,7 @@ public class BookStore {
     }
 
     private void updateBookPriceAndInventory(String Id, double price, int stock){
-        String update = "UPDATE Books Price=" + price +", Stock=" + stock + " WHERE ID='" + Id + "'";
+        String update = "UPDATE Books SET Price=" + price +", Stock=" + stock + " WHERE ID=" + Id + ";";
         execQuery(update);
     }
 
@@ -179,20 +181,19 @@ public class BookStore {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
             statement = con.createStatement();
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public boolean checkLogin(Request request, Response response){
-        if(request.session().attribute("uName") == null){
-            return false;
-        }else if(currentUser == null || currentUser.getUserName().equals("")
-                && request.session().attribute("uName") == null){
-            currentUser = new User(request.session().attribute("uName"));
+        Map<String, String> map = request.cookies();
+        if(map.containsKey("uName")){
             return true;
+        }else{
+            currentUser = new User(map.get("uName"));
+            return false;
         }
-        return true;
     }
 }
