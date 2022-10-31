@@ -60,7 +60,6 @@ public class RegisterUser {
                 if (statement != null) {
                     statement.executeUpdate(insert);
                     request.session().attribute("uName", userName);
-                    response.cookie("uName", userName);
                     request.session().maxInactiveInterval(9999);
                     response.redirect("/Home");
                     return "";

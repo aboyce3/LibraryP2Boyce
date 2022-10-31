@@ -5,6 +5,7 @@ import spark.Request;
 import spark.Response;
 import syr.edu.Purchase.PurchaseFailure;
 import syr.edu.Purchase.PurchaseSuccess;
+import syr.edu.Sale.SaleResponse;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +14,6 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BookStore {
 
@@ -78,20 +78,16 @@ public class BookStore {
             response.redirect("/Login");
             return "";
         }
-        double newPrice = 0.0;
-        double oldPrice = 0.0;
         String id = request.params(":id");
-        for(int i = 0; i < books.size(); i++){
-            Book b = books.get(i);
-            if(b.getId().equals(id)){
-                oldPrice = b.getPrice();
-                newPrice = Double.parseDouble(df.format(b.getPrice() * .9));
-                b.setPrice(newPrice);
-                books.set(i, b);
-                return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseSuccess(oldPrice, newPrice));
+        for(int i = 0; i < currentUser.getOwned().size(); i++){
+            if(currentUser.getOwned().get(i).getId().equals(id)){
+                currentUser.removeOwned(currentUser.getOwned().get(i));
+                updateBookPriceAndInventory(currentUser.getOwned().get(i).getId(),
+                        currentUser.getOwned().get(i).getPrice(),currentUser.getOwned().get(i).getStock() -1);
+                return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Success"));
             }
         }
-        return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseFailure());
+        return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Failure"));
     }
 
     public String sellISBN(Request request, Response response) {
@@ -99,20 +95,15 @@ public class BookStore {
             response.redirect("/Login");
             return "";
         }
-        double newPrice = 0.0;
-        double oldPrice = 0.0;
         String isbn = request.params(":isbn");
         for(int i = 0; i < books.size(); i++){
-            Book b = books.get(i);
-            if(b.getIsbn().equals(isbn)){
-                oldPrice = b.getPrice();
-                newPrice = Double.parseDouble(df.format(b.getPrice() * .9));
-                b.setPrice(newPrice);
-                books.set(i, b);
-                return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseSuccess(oldPrice, newPrice));
+            if(books.get(i).getIsbn().equals(isbn)){
+                updateBookPriceAndInventory(currentUser.getOwned().get(i).getId(),
+                        currentUser.getOwned().get(i).getPrice(),currentUser.getOwned().get(i).getStock() + 1);
+                return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Success"));
             }
         }
-        return new GsonBuilder().setPrettyPrinting().create().toJson(new PurchaseFailure());
+        return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Failure"));
     }
 
     private void initStore(){
@@ -150,7 +141,7 @@ public class BookStore {
     }
 
     private void updateBookPriceAndInventory(String Id, double price, int stock){
-        String update = "UPDATE Books SET Price=" + price +", Stock=" + stock + " WHERE ID=" + Id + ";";
+        String update = "UPDATE Books SET Price=" + price +", Stock=" + stock + " WHERE ID='" + Id + "'";
         execQuery(update);
     }
 
@@ -188,11 +179,10 @@ public class BookStore {
     }
 
     public boolean checkLogin(Request request, Response response){
-        Map<String, String> map = request.cookies();
-        if(map.containsKey("uName")){
+        if(request.session().attribute("uName") == null){
             return true;
         }else{
-            currentUser = new User(map.get("uName"));
+            currentUser = new User(request.session().attribute("uName").toString());
             return false;
         }
     }
