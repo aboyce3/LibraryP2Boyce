@@ -143,7 +143,7 @@ public class BookStore {
     }
 
     private void updateBookPriceAndInventory(String ISBN, double price, int stock){
-        String update = "UPDATE Books SET Price=" + price +", Stock=" + stock + " WHERE ISBN='" + ISBN + "'";
+        String update = "UPDATE Books SET Price='" + price +"', Stock='" + stock + "' WHERE ISBN='" + ISBN + "'";
         execQuery(update);
     }
 

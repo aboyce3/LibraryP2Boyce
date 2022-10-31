@@ -28,13 +28,13 @@ public class User {
         for(int i = 0; i < owned.size(); i++){
             if(owned.get(i).getId().equals(b.getId())){
                 owned.get(i).setStock(owned.get(i).getStock() + 1);
-                String update = "UPDATE BookStore.userOwned SET userAmount=" + owned.get(i).getStock()
-                        + " WHERE userName='" + userName + "' AND bookID=" + b.getId() + ";";
+                String update = "UPDATE BookStore.userOwned SET userAmount='" + owned.get(i).getStock()
+                        + "' WHERE userName='" + userName + "' AND bookID='" + b.getId() + "';";
                 execQuery(update);
                 return;
             }
         }
-        String update = "INSERT INTO BookStore.userOwned (bookID, userName, userAmount) VALUES (" + b.getId() + ", '" + userName + "', " + 1 + ")";
+        String update = "INSERT INTO BookStore.userOwned (bookID, userName, userAmount) VALUES ('" + b.getId() + "', '" + userName + "', '" + 1 + "')";
         execQuery(update);
         temp.setStock(1);
         owned.add(temp);
