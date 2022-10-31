@@ -5,7 +5,8 @@ import spark.Request;
 import spark.Response;
 import syr.edu.Purchase.PurchaseFailure;
 import syr.edu.Purchase.PurchaseSuccess;
-import syr.edu.Sale.SaleResponse;
+import syr.edu.Sale.SaleFailure;
+import syr.edu.Sale.SaleSuccess;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -81,14 +82,19 @@ public class BookStore {
         String id = request.params(":id");
         for(int i = 0; i < currentUser.getOwned().size(); i++){
             if(currentUser.getOwned().get(i).getId().equals(id)){
-                currentUser.removeOwned(currentUser.getOwned().get(i));
-                updateBookPriceAndInventory(currentUser.getOwned().get(i).getIsbn(),
-                        currentUser.getOwned().get(i).getPrice(),currentUser.getOwned().get(i).getStock() -1);
-                currentUser = new User(currentUser.getUserName());
-                return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Success"));
+                for(Book b : books){
+                    if(b.getId().equals(id)){
+                        updateBookPriceAndInventory(currentUser.getOwned().get(i).getIsbn(),
+                                currentUser.getOwned().get(i).getPrice(),b.getStock() +1);
+                        currentUser.removeOwned(currentUser.getOwned().get(i));
+                        currentUser = new User(currentUser.getUserName());
+                        return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleSuccess());
+                    }
+                }
+
             }
         }
-        return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Failure"));
+        return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleFailure());
     }
 
     public String sellISBN(Request request, Response response) {
@@ -102,10 +108,10 @@ public class BookStore {
                 updateBookPriceAndInventory(books.get(i).getIsbn(),
                         books.get(i).getPrice(),books.get(i).getStock() + 1);
                 currentUser = new User(currentUser.getUserName());
-                return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Success"));
+                return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleSuccess());
             }
         }
-        return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleResponse("Failure"));
+        return new GsonBuilder().setPrettyPrinting().create().toJson(new SaleFailure());
     }
 
     private void initStore(){
@@ -121,13 +127,14 @@ public class BookStore {
             results = statement.executeQuery(lookup);
             while (results.next()) {
                 //String isbn, List<String> Authors, String title, String edition, double price, int stock
+                String id = results.getString("ID");
                 String ISBN = results.getString("ISBN");
                 List<String> authors = List.of(results.getString("Authors").split(","));
                 String title = results.getString("Title");
                 String edition = results.getString("Edition");
                 double price = results.getDouble("Price");
                 int stock = results.getInt("Stock");
-                temp.add(new Book(ISBN, authors, title, edition, price, stock));
+                temp.add(new Book(id, ISBN, authors, title, edition, price, stock));
             }
             this.books = temp;
         } catch (Exception e) {

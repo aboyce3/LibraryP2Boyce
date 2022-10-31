@@ -31,8 +31,8 @@ public class Main {
 
         post("/AccountCreation", "application/html", register::AccountCreation);
         post("/Sell/:id", "application/json", bookStore::sellID);
+        post("/Buy/:id", "application/json", bookStore::buy);
 
         put("/Sell/:isbn", "application/json", bookStore::sellISBN);
-        post("/Buy/:id", "application/json", bookStore::buy);
     }
 }

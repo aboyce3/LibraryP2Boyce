@@ -44,7 +44,7 @@ public class User {
         for(int i = 0; i < owned.size(); i++){
             if(owned.get(i).getId().equals(b.getId())){
                 if(owned.get(i).getStock()-1 > 0){
-                    String downsize = "UPDATE BookStore.userOwned Stock=" + (owned.get(i).getStock()-1) + " WHERE ID='" +
+                    String downsize = "UPDATE BookStore.userOwned userAmount=" + (owned.get(i).getStock()-1) + " WHERE ID='" +
                             userName + "' AND bookID=" + b.getId() + ";";
                     execQuery(downsize);
                     owned.get(i).setStock(owned.get(i).getStock()-1);

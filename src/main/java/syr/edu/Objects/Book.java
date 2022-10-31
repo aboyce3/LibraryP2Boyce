@@ -2,6 +2,7 @@ package syr.edu.Objects;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Book {
     private String id;
@@ -19,8 +20,7 @@ public class Book {
         this.edition = edition;
         this.price = Math.round(price*100.0)/100.0;
         this.stock = stock;
-        this.id = String.valueOf(this.hashCode());
-        System.out.println(id);
+        this.id = String.valueOf(UUID.randomUUID().toString());
     }
     public Book(String isbn, String authors, String title, String edition, String s, double price, int stock){
         this.isbn = isbn;
@@ -29,7 +29,7 @@ public class Book {
         this.authors = List.of(authors.split(","));
         this.price = Math.round(price*100.0)/100.0;
         this.stock = stock;
-        this.id = String.valueOf(this.hashCode());
+        this.id = String.valueOf(UUID.randomUUID().toString());
     }
 
     public Book(String id, String isbn, List<String> authors, String title, String edition, double price, int stock) {
