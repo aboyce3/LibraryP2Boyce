@@ -1,10 +1,11 @@
 package syr.edu.Objects;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Book {
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     private String id;
     private String isbn;
     private List<String> authors;
@@ -13,23 +14,24 @@ public class Book {
     private double price;
     private int stock;
 
-    public Book(String isbn, List<String> authors, String title, String edition, double price, int stock){
+    public Book(String isbn, List<String> authors, String title, String edition, double price, int stock) {
         this.isbn = isbn;
         this.authors = authors;
         this.title = title;
         this.edition = edition;
-        this.price = Math.round(price*100.0)/100.0;
+        this.price = Double.parseDouble(df.format(price));
         this.stock = stock;
-        this.id = String.valueOf(UUID.randomUUID().toString());
+        this.id = String.valueOf(hashCode());
     }
-    public Book(String isbn, String authors, String title, String edition, String s, double price, int stock){
+
+    public Book(String isbn, String authors, String title, String edition, String s, double price, int stock) {
         this.isbn = isbn;
         this.title = title;
         this.edition = edition;
         this.authors = List.of(authors.split(","));
-        this.price = Math.round(price*100.0)/100.0;
+        this.price = Double.parseDouble(df.format(price));
         this.stock = stock;
-        this.id = String.valueOf(UUID.randomUUID().toString());
+        this.id = String.valueOf(hashCode());
     }
 
     public Book(String id, String isbn, List<String> authors, String title, String edition, double price, int stock) {
@@ -38,7 +40,7 @@ public class Book {
         this.authors = authors;
         this.title = title;
         this.edition = edition;
-        this.price = price;
+        this.price = Double.parseDouble(df.format(price));
         this.stock = stock;
     }
 
@@ -48,7 +50,7 @@ public class Book {
     }
 
     public void setStock(int stock) {
-        if(stock < 0){
+        if (stock < 0) {
             return;
         }
         this.stock = stock;
@@ -58,59 +60,59 @@ public class Book {
         return id;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public List<String> getAuthors() {
-        return authors;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getEdition() {
-        return edition;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIsbn() {
+        return isbn;
     }
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
+    public List<String> getAuthors() {
+        return authors;
+    }
+
     public void setAuthors(List<String> authors) {
         this.authors = authors;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getEdition() {
+        return edition;
+    }
+
     public void setEdition(String edition) {
         this.edition = edition;
     }
 
-    public void setPrice(double price) {
-        this.price = Math.round(price*100.0)/100.0;
+    public Double getPrice() {
+        return price;
     }
 
-    public String authorsToDB(){
+    public void setPrice(double price) {
+        this.price = Math.round(price * 100.0) / 100.0;
+    }
+
+    public String authorsToDB() {
         String result = "";
-        if(authors.isEmpty()){
+        if (authors.isEmpty()) {
             return "";
         }
-        for(String s :authors){
+        for (String s : authors) {
             result += s + ",";
         }
-        return result.substring(0, result.length()-2);
+        return result.substring(0, result.length() - 2);
     }
 
     @Override

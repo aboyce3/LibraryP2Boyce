@@ -5,7 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9b4d02e-f973-4b58-9621-d0d9db632cbf" name="Changes" comment="LibraryP2 v1">
+      <change afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Services/SQLServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Sale/SaleFailure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Sale/SaleFailure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Sale/SaleResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Sale/SaleResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Sale/SaleSuccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Sale/SaleSuccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Services/LoginUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Services/LoginUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/syr/edu/Services/RegisterUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/syr/edu/Services/RegisterUser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -238,7 +249,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667236097931</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="LibraryP2 v1">
+      <created>1667238132618</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1667238132618</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -259,100 +277,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="LibraryP2 v1" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Services/LoginUser.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>61</line>
-          <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>81</line>
-          <option name="timeStamp" value="45" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>82</line>
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>96</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java</url>
-          <line>85</line>
-          <option name="timeStamp" value="57" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/User.java</url>
-          <line>39</line>
-          <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>58</line>
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>86</line>
-          <option name="timeStamp" value="61" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>87</line>
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>88</line>
-          <option name="timeStamp" value="63" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>89</line>
-          <option name="timeStamp" value="64" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/syr/edu/Objects/BookStore.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="65" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="syr.edu.Objects.User" memberName="owned" />

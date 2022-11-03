@@ -1,9 +1,9 @@
 package syr.edu.Sale;
 
 public class SaleResponse {
-    String status;
+    private String status;
 
-    public SaleResponse(String s){
+    public SaleResponse(String s) {
         status = s;
     }
 

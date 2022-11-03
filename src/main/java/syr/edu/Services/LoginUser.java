@@ -3,17 +3,21 @@ package syr.edu.Services;
 import com.google.common.io.Files;
 import spark.Request;
 import spark.Response;
-import syr.edu.Objects.User;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.sql.*;
 
 public class LoginUser {
 
+    SQLServices database;
+
+    public LoginUser() {
+        database = new SQLServices();
+    }
+
     public String login(Request request, Response response) throws IOException {
-        if(request.session().attribute("uName") != null){
+        if (request.session().attribute("uName") != null) {
             response.redirect("/Home");
             return "";
         }
@@ -23,8 +27,8 @@ public class LoginUser {
         return content;
     }
 
-    public String validateLogin(Request request, Response response){
-        if(request.session().attribute("uName") != null){
+    public String validateLogin(Request request, Response response) {
+        if (request.session().attribute("uName") != null) {
             response.redirect("/Home");
             return "";
         }
@@ -32,29 +36,13 @@ public class LoginUser {
         String password = request.queryParams("password");
         String lookup = "SELECT * FROM BookStore.users WHERE username = '" + userName + "' AND password = '"
                 + password + "';";
-        Connection con = null;
-        Statement statement = null;
-        ResultSet results = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "password");
-            statement = con.createStatement();
-            results = statement.executeQuery(lookup);
-            while (results.next()) {
-                String uName = results.getString("userName");
-                String pass = results.getString("password");
-                if (userName.contentEquals(uName) && password.contentEquals(pass)) {
-                    request.session().attribute("uName", userName);
-                    request.session().maxInactiveInterval(99999);
-                    response.redirect("/Home");
-                    return "";
-                }
-            }
-            response.redirect("/Login");
-            return "";
-        } catch (SQLException | ClassNotFoundException e) {
-            response.redirect("/Login");
+        if (database.userLoginLookup(lookup, userName, password)) {
+            request.session().attribute("uName", userName);
+            request.session().maxInactiveInterval(99999);
+            response.redirect("/Home");
             return "";
         }
+        response.redirect("/Login");
+        return "";
     }
 }
