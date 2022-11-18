@@ -95,6 +95,7 @@ public class BookServices {
                 Book newBook = new Book(currIsbn, currAuthors, currTitle, currEd, currPrice, currDate);
                 database.sellISBN(newBook);
                 store.addBook(newBook);
+                database.updateBookDate(newBook.getId());
                 JSONObject json = new JSONObject();
                 json.put("status", "Successful");
                 json.put("price", currPrice);
