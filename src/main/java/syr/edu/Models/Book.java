@@ -1,8 +1,9 @@
-package syr.edu.Objects;
+package syr.edu.Models;
 
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Book {
     private static final DecimalFormat df = new DecimalFormat("0.00");
@@ -12,48 +13,27 @@ public class Book {
     private String title;
     private String edition;
     private double price;
-    private int stock;
+    private String date;
 
-    public Book(String isbn, List<String> authors, String title, String edition, double price, int stock) {
+
+    public Book(String isbn, List<String> authors, String title, String edition, double price, String date) {
         this.isbn = isbn;
         this.authors = authors;
         this.title = title;
         this.edition = edition;
         this.price = Double.parseDouble(df.format(price));
-        this.stock = stock;
-        this.id = String.valueOf(hashCode());
+        this.id = UUID.randomUUID().toString();
+        this.date = date;
     }
 
-    public Book(String isbn, String authors, String title, String edition, String s, double price, int stock) {
-        this.isbn = isbn;
-        this.title = title;
-        this.edition = edition;
-        this.authors = List.of(authors.split(","));
-        this.price = Double.parseDouble(df.format(price));
-        this.stock = stock;
-        this.id = String.valueOf(hashCode());
-    }
-
-    public Book(String id, String isbn, List<String> authors, String title, String edition, double price, int stock) {
+    public Book(String id, String isbn, List<String> authors, String title, String edition, double price, String date) {
         this.id = id;
         this.isbn = isbn;
         this.authors = authors;
         this.title = title;
         this.edition = edition;
         this.price = Double.parseDouble(df.format(price));
-        this.stock = stock;
-    }
-
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        if (stock < 0) {
-            return;
-        }
-        this.stock = stock;
+        this.date = date;
     }
 
     public String getId() {
@@ -64,44 +44,37 @@ public class Book {
         this.id = id;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+
     public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
 
     public List<String> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<String> authors) {
-        this.authors = authors;
-    }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getEdition() {
         return edition;
     }
 
-    public void setEdition(String edition) {
-        this.edition = edition;
-    }
 
     public Double getPrice() {
         return price;
     }
 
     public void setPrice(double price) {
-        this.price = Math.round(price * 100.0) / 100.0;
+        this.price = Double.parseDouble(df.format(price));
     }
 
     public String authorsToDB() {
@@ -112,7 +85,7 @@ public class Book {
         for (String s : authors) {
             result += s + ",";
         }
-        return result.substring(0, result.length() - 2);
+        return result.substring(0, result.length() - 1);
     }
 
     @Override

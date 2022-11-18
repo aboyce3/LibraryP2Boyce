@@ -8,11 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class RegisterUser {
+public class RegisterServices {
 
     SQLServices database;
 
-    public RegisterUser() {
+    public RegisterServices() {
         database = new SQLServices();
     }
 
@@ -39,7 +39,7 @@ public class RegisterUser {
             response.redirect("/CreateAnAccount");
             return "";
         }
-        if (database.userCanRegister(lookup, username) && database.execUpdateInsert(insert)) {
+        if (database.userCanRegister(lookup, username) && database.execModification(insert)) {
             response.type("text/html");
             request.session().attribute("uName", username);
             request.session().maxInactiveInterval(9999);

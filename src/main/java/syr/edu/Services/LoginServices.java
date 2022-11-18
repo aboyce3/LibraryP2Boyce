@@ -8,11 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class LoginUser {
+public class LoginServices {
 
     SQLServices database;
 
-    public LoginUser() {
+    public LoginServices() {
         database = new SQLServices();
     }
 

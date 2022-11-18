@@ -1,10 +1,11 @@
 package syr.edu.Services;
 
-import syr.edu.Objects.Book;
+import syr.edu.Models.Book;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class SQLServices {
@@ -20,13 +21,29 @@ public class SQLServices {
         }
     }
 
-    public boolean execUpdateInsert(String query) {
+    public boolean execModification(String query) {
         try {
             Statement statement = con.createStatement();
             statement.executeUpdate(query);
             return true;
         } catch (SQLException s) {
             return false;
+        }
+    }
+
+    public double priceLookup(String id) {
+        try {
+            String query = "SELECT Price FROM Books WHERE ID='" + id + "';";
+            Statement statement = con.createStatement();
+            ResultSet results = statement.executeQuery(query);
+            List<Book> temp = new ArrayList<>();
+            while (results.next()) {
+                return results.getDouble("Price");
+            }
+            return 0.0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0.0;
         }
     }
 
@@ -42,8 +59,8 @@ public class SQLServices {
                 String title = results.getString("Title");
                 String edition = results.getString("Edition");
                 double price = results.getDouble("Price");
-                int stock = results.getInt("Stock");
-                temp.add(new Book(id, ISBN, authors, title, edition, price, stock));
+                String date = results.getString("Date");
+                temp.add(new Book(id, ISBN, authors, title, edition, price, date));
             }
             return temp;
         } catch (SQLException e) {
@@ -88,27 +105,51 @@ public class SQLServices {
         }
     }
 
-    public boolean updateBook(String ISBN, double price, int stock) {
-        String update = "UPDATE Books SET Price='" + price + "', Stock='" + stock + "' WHERE ISBN='" + ISBN + "'";
-        return execUpdateInsert(update);
+    public boolean updateBook(String ID, double price) {
+        String update = "UPDATE BookStore.Books SET Price='" + price + "'" + " WHERE ID='" + ID + "';";
+        return execModification(update);
     }
 
-    public HashMap<String, Integer> initUser(String username) {
-        HashMap<String, Integer> temp = new HashMap<>();
+    public boolean updateBookDate(String ID){
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate currentDay = LocalDate.parse(myFormatObj.format(currentDate));
+        String update = "UPDATE BookStore.Books SET Date='" + currentDay + "'" + " WHERE ID='" + ID + "';";
+        return execModification(update);
+    }
+
+    public boolean sellISBN(Book b){
+        String insert = "INSERT into BookStore.Books " + "(ID, ISBN, Authors, Title, Edition, Price, Date)"
+                + "VALUES " + "('" + b.getId() + "','"
+                + b.getIsbn() + "','"
+                + b.authorsToDB() + "','"
+                + b.getTitle() + "','"
+                + b.getEdition() + "','"
+                + b.getPrice() + "','"
+                + b.getDate() + "')";
+        return execModification(insert);
+    }
+
+    public boolean sellID(String id, String username){
+        String sell = "DELETE FROM BookStore.owned WHERE ID='" + id + "' AND username='" + username +"';";
+        return execModification(sell);
+    }
+
+    public List<String> initUser(String username) {
+        List<String> idNums = new ArrayList<>();
         try {
-            String getOwned = "SELECT * FROM BookStore.Books JOIN BookStore.userOwned ON ID=bookID " +
-                    "WHERE userName='" + username + "';";
+            String getOwned = "SELECT * FROM BookStore.Books JOIN BookStore.owned ON Books.ID=owned.ID " +
+                    "WHERE username='" + username + "';";
             Statement statement = con.createStatement();
             ResultSet results = statement.executeQuery(getOwned);
             while (results.next()) {
                 String id = results.getString("ID");
-                int stock = results.getInt("userAmount");
-                temp.put(id, stock);
+                idNums.add(id);
             }
-            return temp;
+            return idNums;
         } catch (SQLException e) {
             e.printStackTrace();
-            return temp;
+            return idNums;
         }
     }
 }
